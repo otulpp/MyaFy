@@ -1,0 +1,1226 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MyaFy</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    background: #315c82;
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 11px;
+    color: #222;
+}
+
+/* i apologize in advance for the JS, i have no idea what i'm doing */
+
+.window {
+    width: 680px;
+    max-width: calc(100% - 20px);
+
+    margin: 40px auto;
+
+    background: #edf3f8;
+
+    border: 1px solid #17466f;
+
+    box-shadow:
+        0 0 0 1px #7898b2,
+        0 4px 14px rgba(0, 0, 0, .4);
+}
+
+
+
+.titlebar {
+    height: 29px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 7px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #73a9da,
+            #4a89c1 35%,
+            #286ba6 70%,
+            #165287
+        );
+
+    border-bottom: 1px solid #0c3c65;
+
+    text-shadow: 1px 1px #24547b;
+}
+
+.logo {
+    width: 16px;
+    height: 16px;
+
+    margin-right: 6px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            white,
+            #bde8ff 30%,
+            #3c99dc 60%,
+            #07518d
+        );
+
+    border: 1px solid #d8f1ff;
+
+    position: relative;
+}
+
+.logo::after {
+    content: "";
+
+    position: absolute;
+
+    left: 5px;
+    top: 4px;
+
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 6px solid white;
+}
+
+.title {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.window-buttons {
+    margin-left: auto;
+
+    display: flex;
+    gap: 2px;
+}
+
+.window-button {
+    width: 19px;
+    height: 18px;
+
+    padding: 0;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #78afe0,
+            #397ab3
+        );
+
+    border: 1px solid #174c7b;
+
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+
+.menu {
+    height: 23px;
+
+    display: flex;
+    align-items: center;
+
+    padding-left: 4px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #f3f7fa,
+            #d8e4ee
+        );
+
+    border-bottom: 1px solid #93aabd;
+}
+
+.menu span {
+    padding: 4px 10px;
+
+    color: #244c6b;
+}
+
+.menu span:hover {
+    background: #c9deef;
+}
+
+
+
+.main {
+    min-height: 350px;
+
+    background: #f5f8fb;
+}
+
+
+
+.header {
+    height: 43px;
+
+    display: flex;
+    align-items: center;
+
+    padding-left: 18px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #6da6d8,
+            #4284be 40%,
+            #2469a4 75%,
+            #155286
+        );
+
+    border-bottom: 1px solid #174b75;
+
+    text-shadow: 1px 1px #1d4e75;
+}
+
+.header-title {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+
+.upload {
+    width: 440px;
+    max-width: calc(100% - 40px);
+
+    margin: 48px auto;
+}
+
+.upload-title {
+    margin-bottom: 20px;
+
+    color: #194a6e;
+
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+.field {
+    margin-bottom: 17px;
+}
+
+label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #315773;
+
+    font-weight: bold;
+}
+
+input[type="file"],
+input[type="password"] {
+    width: 100%;
+    height: 27px;
+
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 11px;
+
+    color: #222;
+
+    background: white;
+
+    border: 1px solid #7c95a9;
+
+    box-shadow:
+        inset 1px 1px 2px rgba(0, 0, 0, .1);
+}
+
+input[type="password"] {
+    padding: 4px 6px;
+}
+
+input[type="file"] {
+    padding: 3px;
+}
+
+
+
+.selected {
+    display: none;
+
+    margin-top: 7px;
+
+    border: 1px solid #9badbc;
+
+    background: white;
+}
+
+.selected-header {
+    padding: 4px 6px;
+
+    color: #31536d;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #edf4f9,
+            #dce7f0
+        );
+
+    border-bottom: 1px solid #c0ccd5;
+}
+
+.file-list {
+    max-height: 90px;
+
+    overflow-y: auto;
+}
+
+.file {
+    padding: 3px 6px;
+
+    color: #5b6b77;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    border-bottom: 1px solid #edf0f2;
+}
+
+
+
+.button {
+    height: 27px;
+
+    min-width: 100px;
+
+    padding: 2px 14px;
+
+    color: #17486c;
+
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #ffffff,
+            #e9f1f7 35%,
+            #c7d8e5 70%,
+            #a9c1d3
+        );
+
+    border: 1px solid #627e96;
+
+    border-radius: 2px;
+
+    box-shadow:
+        inset 0 1px 0 white;
+
+    cursor: pointer;
+}
+
+.button:hover {
+    background:
+        linear-gradient(
+            to bottom,
+            #ffffff,
+            #e1eef9,
+            #b5d0e5
+        );
+}
+
+.button:active {
+    background:
+        linear-gradient(
+            to bottom,
+            #b0c6d7,
+            #d4e1eb
+        );
+
+    box-shadow:
+        inset 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+.button:disabled {
+    opacity: .6;
+    cursor: default;
+}
+
+
+/* dont leave me waitin'! */
+
+.message {
+    display: none;
+
+    margin-top: 12px;
+
+    padding: 7px;
+
+    color: #31566f;
+
+    background: #edf5fb;
+
+    border: 1px solid #a0b5c5;
+}
+
+.message.success {
+    color: #28532d;
+
+    background: #edf7ee;
+
+    border-color: #9dbba1;
+}
+
+.message.error {
+    color: #713333;
+
+    background: #fff0f0;
+
+    border-color: #c6a0a0;
+}
+
+
+/* status bar*/
+
+.status {
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 7px;
+
+    color: #566d7e;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #edf4f9,
+            #d0dee8
+        );
+
+    border-top: 1px solid #8da4b7;
+}
+
+
+/* phone stuff */
+
+@media (max-width: 600px) {
+
+    .window {
+        margin: 10px auto;
+    }
+
+    .upload {
+        width: auto;
+        max-width: none;
+
+        margin: 30px 20px;
+    }
+
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="window">
+
+
+
+    <div class="titlebar">
+
+        <div class="logo"></div>
+
+        <div class="title">
+            MyaFy
+        </div>
+
+        <div class="window-buttons">
+            <button class="window-button">_</button>
+            <button class="window-button">□</button>
+            <button class="window-button">×</button>
+        </div>
+
+    </div>
+
+
+    <!-- ----------------------------------------------------------
+         MENU BAR-->
+
+    <div class="menu">
+        <span>File</span>
+        <span>View</span>
+        <span>Help</span>
+    </div>
+
+
+    <!-- main-->
+
+    <main class="main">
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div class="header-title">
+                MyaFy
+            </div>
+
+        </div>
+
+
+        <!-- UPLOAD -->
+
+        <div class="upload">
+
+            <div class="upload-title">
+                Upload Music
+            </div>
+
+
+            <form id="uploadForm">
+
+
+                <!-- MUSIC FOLDER -->
+
+                <div class="field">
+
+                    <label for="file">
+                        Music folder
+                    </label>
+
+                    <input
+                        type="file"
+                        id="file"
+                        name="file"
+                        accept=".mp3,.flac,.wav,.m4a,.aac,.ogg,.opus"
+                        webkitdirectory
+                        directory
+                        multiple
+                        required
+                    >
+
+
+                    <div
+                        class="selected"
+                        id="selectedContainer"
+                    >
+
+                        <div class="selected-header">
+                            Selected files
+                        </div>
+
+                        <div
+                            class="file-list"
+                            id="selectedFiles"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="field">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        autocomplete="off"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- UPLOAD BUTTON -->
+
+                <button
+                    type="submit"
+                    class="button"
+                    id="uploadButton"
+                >
+                    Upload
+                </button>
+
+
+                <!-- MESSAGE -->
+
+                <div
+                    class="message"
+                    id="message"
+                ></div>
+
+
+            </form>
+
+        </div>
+
+    </main>
+
+
+    <!-- bong rip history -->
+
+    <div
+        class="selected"
+        id="uploadHistoryContainer"
+        style="display: none;"
+    >
+
+        <div class="selected-header">
+            Recent Uploads
+        </div>
+
+        <div
+            class="file-list"
+            id="uploadHistory"
+        ></div>
+
+    </div>
+
+
+    <!-- what am i doing-->
+
+    <div
+        class="status"
+        id="statusText"
+    >
+        Ready
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+const form =
+    document.getElementById("uploadForm");
+
+const fileInput =
+    document.getElementById("file");
+
+const passwordInput =
+    document.getElementById("password");
+
+const uploadButton =
+    document.getElementById("uploadButton");
+
+const selectedContainer =
+    document.getElementById("selectedContainer");
+
+const selectedFiles =
+    document.getElementById("selectedFiles");
+
+const message =
+    document.getElementById("message");
+
+const statusText =
+    document.getElementById("statusText");
+
+const uploadHistoryContainer =
+    document.getElementById("uploadHistoryContainer");
+
+const uploadHistory =
+    document.getElementById("uploadHistory");
+
+
+/* upload history because a 20 min deftones song with bong rips is not being uplaoded, sorry Merek */
+
+async function loadUploadHistory() {
+
+    try {
+
+        const response =
+            await fetch("/upload-history", {
+                cache: "no-store"
+            });
+
+        if (!response.ok) {
+            throw new Error(
+                `History request failed: ${response.status}`
+            );
+        }
+
+        const data =
+            await response.json();
+
+        const history =
+            Array.isArray(data.history)
+                ? data.history
+                : [];
+
+        uploadHistory.innerHTML = "";
+
+        if (!history.length) {
+
+            uploadHistoryContainer.style.display =
+                "none";
+
+            return;
+        }
+
+        history.forEach(entry => {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "file";
+
+            const icon =
+                entry.status === "success"
+                    ? "✓"
+                    : "✗";
+
+            const details = [];
+
+            if (entry.artist && entry.album) {
+
+                details.push(
+                    `${entry.artist} — ${entry.album}`
+                );
+
+            }
+
+            details.push(
+                entry.filename || "Upload attempt"
+            );
+
+            if (entry.error) {
+
+                details.push(
+                    entry.error
+                );
+
+            }
+
+            if (entry.time) {
+
+                const date =
+                    new Date(entry.time);
+
+                if (!Number.isNaN(date.getTime())) {
+
+                    details.push(
+                        date.toLocaleString()
+                    );
+                }
+            }
+
+            item.textContent =
+                `${icon} ${details.join(" — ")}`;
+
+            uploadHistory.appendChild(item);
+
+        });
+
+        uploadHistoryContainer.style.display =
+            "block";
+
+    } catch (error) {
+
+        console.error(
+            "MyaFy history error:",
+            error
+        );
+
+    }
+}
+
+
+
+
+const allowedExtensions = [
+    "mp3",
+    "flac",
+    "wav",
+    "m4a",
+    "aac",
+    "ogg",
+    "opus"
+];
+
+
+let selectedMusicFiles = [];
+
+
+function getExtension(name) {
+
+    const parts =
+        name.toLowerCase().split(".");
+
+    return parts.length > 1
+        ? parts.pop()
+        : "";
+
+}
+
+
+/* jingle jangle*/
+
+function getFileKey(file) {
+
+    return [
+        file.webkitRelativePath || file.name,
+        file.size,
+        file.lastModified
+    ].join("|");
+
+}
+
+
+/* give me your music*/
+
+function getMusicFiles() {
+
+    return selectedMusicFiles.filter(file =>
+        allowedExtensions.includes(
+            getExtension(file.name)
+        )
+    );
+
+}
+
+
+/*----------------------------------------------------------
+   MESSAGE*/
+
+function showMessage(text, type = "") {
+
+    message.textContent =
+        text;
+
+    message.className =
+        "message " + type;
+
+    message.style.display =
+        "block";
+
+}
+
+
+function hideMessage() {
+
+    message.textContent =
+        "";
+
+    message.className =
+        "message";
+
+    message.style.display =
+        "none";
+
+}
+
+
+/* ----------------------------------------------------------
+   DISPLAY SELECTED FILES*/
+
+function updateFiles() {
+
+    const files =
+        getMusicFiles();
+
+
+    selectedFiles.innerHTML =
+        "";
+
+
+    if (!files.length) {
+
+        selectedContainer.style.display =
+            "none";
+
+        statusText.textContent =
+            "Ready";
+
+        return;
+
+    }
+
+
+    selectedContainer.style.display =
+        "block";
+
+
+    files.forEach(file => {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "file";
+
+        item.textContent =
+            file.webkitRelativePath ||
+            file.name;
+
+        selectedFiles.appendChild(item);
+
+    });
+
+
+    statusText.textContent =
+        `${files.length} file${files.length === 1 ? "" : "s"} selected`;
+
+}
+
+
+/* ----------------------------------------------------------
+   FOLDER SELECTION */
+
+fileInput.addEventListener(
+    "click",
+    () => {
+
+        /*
+         * clear only the native picker selection
+         * JS array keeps all previously selected
+         * folders/files.
+         * thank god for stack overflow because i know NOTHING about javascript
+         */
+
+        fileInput.value = "";
+
+    }
+);
+
+
+fileInput.addEventListener(
+    "change",
+    () => {
+
+        hideMessage();
+
+
+        const newlySelected =
+            Array.from(fileInput.files);
+
+
+        newlySelected.forEach(file => {
+
+            if (
+                !allowedExtensions.includes(
+                    getExtension(file.name)
+                )
+            ) {
+                return;
+            }
+
+
+            const key =
+                getFileKey(file);
+
+
+            if (
+                !selectedMusicFiles.some(
+                    existing =>
+                        getFileKey(existing) === key
+                )
+            ) {
+
+                selectedMusicFiles.push(file);
+
+            }
+
+        });
+
+
+        updateFiles();
+
+    }
+);
+
+
+
+async function uploadSingleFile(file, password) {
+
+    const formData =
+        new FormData();
+
+
+    formData.append(
+        "password",
+        password
+    );
+
+
+    formData.append(
+        "file",
+        file,
+        file.webkitRelativePath ||
+        file.name
+    );
+
+
+    const response =
+        await fetch(
+            "/upload",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+
+    let result = {};
+
+
+    try {
+
+        result =
+            await response.json();
+
+    } catch {
+
+        result = {};
+
+    }
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            result.error ||
+            "Upload failed."
+        );
+
+    }
+
+
+    return result;
+
+}
+
+
+/* ----------------------------------------------------------
+   UPLOAD*/
+
+form.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+
+        const files =
+            getMusicFiles();
+
+
+        if (!files.length) {
+
+            showMessage(
+                "Select one or more folders containing music.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if (!passwordInput.value) {
+
+            showMessage(
+                "Enter the upload password.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        uploadButton.disabled =
+            true;
+
+
+        const password =
+            passwordInput.value;
+
+
+        let successful =
+            0;
+
+        let failed =
+            0;
+
+        const errors = [];
+
+
+        hideMessage();
+
+
+        /*
+         * upload files one at a time
+         *
+         * avoids sending one enormous multipart request
+         * through Cloudflare and makes large folder uploads
+         * much more reliable
+         */
+
+        for (
+            let i = 0;
+            i < files.length;
+            i++
+        ) {
+
+            const file =
+                files[i];
+
+
+            statusText.textContent =
+                `Uploading ${i + 1} of ${files.length}`;
+
+
+            showMessage(
+                `Uploading ${i + 1} of ${files.length}: ${file.name}`
+            );
+
+
+            try {
+
+                await uploadSingleFile(
+                    file,
+                    password
+                );
+
+
+                successful++;
+
+
+            } catch (error) {
+
+                failed++;
+
+
+                errors.push(
+                    `${file.name}: ${error.message}`
+                );
+
+            }
+
+        }
+
+
+        /* pray for me
+        UPLOAD RESULT ----------------------*/
+
+        statusText.textContent =
+            `${successful} of ${files.length} uploaded`;
+
+
+        if (failed === 0) {
+
+            showMessage(
+                `${successful} file${successful === 1 ? "" : "s"} uploaded successfully.`,
+                "success"
+            );
+
+
+        } else if (successful > 0) {
+
+            showMessage(
+                `${successful} file${successful === 1 ? "" : "s"} uploaded successfully. ${failed} failed.`,
+                "error"
+            );
+
+
+            console.error(
+                "MyaFy upload errors:",
+                errors
+            );
+
+
+        } else {
+
+            showMessage(
+                "No files were uploaded.",
+                "error"
+            );
+
+
+            console.error(
+                "MyaFy upload errors:",
+                errors
+            );
+
+        }
+
+
+        /*
+         * clear the selected files after the upload process
+         * finishes
+         */
+
+        if (successful > 0) {
+
+            fileInput.value =
+                "";
+
+            selectedMusicFiles =
+                [];
+
+            selectedFiles.innerHTML =
+                "";
+
+            selectedContainer.style.display =
+                "none";
+
+        }
+
+
+        uploadButton.disabled =
+            false;
+
+    }
+);
+
+loadUploadHistory();
+
+setInterval(
+    loadUploadHistory,
+    5000
+);
+
+
+</script>
+
+</body>
+</html>

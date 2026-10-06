@@ -1,0 +1,10 @@
+.env
+upload_history.json
+venv/
+__pycache__/
+*.pyc
+*.backup
+*.before-multifolder
+*.broken-backup
+*.pre-history-backup
+*-2
